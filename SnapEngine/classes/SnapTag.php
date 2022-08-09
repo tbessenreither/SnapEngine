@@ -19,15 +19,15 @@ class SnapTag {
 		if (!isset($properties['description'])) {
 			throw new SnapTagException('Tag "' . $this->name . '" has no description');
 		}
-		if (!isset($properties['arguments'])) {
-			$properties['arguments'] = [];
+		if (!isset($properties['parameters'])) {
+			$properties['parameters'] = [];
 		}
-		foreach ($properties['arguments'] as $paramKey => &$paramValue) {
+		foreach ($properties['parameters'] as $paramKey => &$paramValue) {
 			if (!isset($paramValue['type'])) {
-				throw new SnapTagException('Tag argument "' . $paramKey . '" must have a type');
+				throw new SnapTagException('Tag parameter "' . $paramKey . '" must have a type');
 			}
 			if (!isset($paramValue['description'])) {
-				throw new SnapTagException('Tag argument "' . $paramKey . '" must have a description');
+				throw new SnapTagException('Tag parameter "' . $paramKey . '" must have a description');
 			}
 			if (!isset($paramValue['position'])) {
 				$paramValue['position'] = null;
@@ -87,7 +87,7 @@ class SnapTag {
 			$parsed = [];
 			parse_str($props['paramsQuery'], $parsed);
 			foreach ($parsed as $key => $value) {
-				if (!isset($this->properties['arguments'][$key])) {
+				if (!isset($this->properties['parameters'][$key])) {
 					throw new SnapEngineParserInvalidParameter('Tag "' . $this->name . '" has no parameter "' . $key . '" that is passed in via get query');
 				}
 				$props['params'][$key] = $value;
@@ -97,7 +97,7 @@ class SnapTag {
 	}
 
 	private function setCallPropsDefaults(&$props) {
-		foreach ($this->properties['arguments'] as $paramKey => $paramSetting) {
+		foreach ($this->properties['parameters'] as $paramKey => $paramSetting) {
 			if (!isset($props['params'][$paramKey]) && isset($paramSetting['default'])) {
 				$props['params'][$paramKey] = $paramSetting['default'];
 			}
@@ -110,7 +110,7 @@ class SnapTag {
 
 	private function setCallPropsTypecasting(&$props) {
 		foreach ($props['params'] as $paramKey => &$paramValue) {
-			$settings = $this->properties['arguments'][$paramKey];
+			$settings = $this->properties['parameters'][$paramKey];
 			if ($settings['type'] === 'bool') {
 				$paramValue = SnapEngineParser::castToBool($paramValue);
 			} else if ($settings['type'] === 'int') {

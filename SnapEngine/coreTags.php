@@ -41,7 +41,7 @@ class SnapEngineCoreTags {
 return [
 	new SnapTag('var', ['SnapEngineCoreTags', 'var'], [
 		'description' => 'Gibt eine Variable aus. Füge Scope über @ nach dem Variablennamen hinzu',
-		'arguments' => [
+		'parameters' => [
 			'key' => [
 				'description' => 'the key of the variable in the template Data array',
 				'type' => 'string',
@@ -66,7 +66,7 @@ return [
 
 	new SnapTag('foreach', ['SnapEngineCoreTags', 'foreach'], [
 		'description' => 'Ruft ein Template in einer Schleife mit den daten aus $key auf',
-		'arguments' => [
+		'parameters' => [
 			'key' => [
 				'description' => 'the key of the variable in the template Data array',
 				'type' => 'string',
