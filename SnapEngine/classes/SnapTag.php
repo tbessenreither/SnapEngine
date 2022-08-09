@@ -26,6 +26,9 @@ class SnapTag {
 			if (!isset($paramValue['type'])) {
 				throw new SnapTagException('Tag argument "' . $paramKey . '" must have a type');
 			}
+			if (!isset($paramValue['description'])) {
+				throw new SnapTagException('Tag argument "' . $paramKey . '" must have a description');
+			}
 			if (!isset($paramValue['position'])) {
 				$paramValue['position'] = null;
 			}

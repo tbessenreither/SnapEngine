@@ -43,17 +43,20 @@ return [
 		'description' => 'Gibt eine Variable aus. Füge Scope über @ nach dem Variablennamen hinzu',
 		'arguments' => [
 			'key' => [
-				'position' => 1,
+				'description' => 'the key of the variable in the template Data array',
 				'type' => 'string',
+				'position' => 1,
 				'required' => true,
 			],
 			'encoding' => [
+				'description' => 'the output encoding of the variable',
 				'type' => 'string',
 				'position' => 2,
 				'default' => 'html',
 				'possibleValues' => ['html', 'none', 'url', 'json'],
 			],
 			'default' => [
+				'description' => 'the default value if the variable does not exist',
 				'type' => 'string',
 				'position' => 3,
 				'default' => null,
@@ -65,6 +68,7 @@ return [
 		'description' => 'Ruft ein Template in einer Schleife mit den daten aus $key auf',
 		'arguments' => [
 			'key' => [
+				'description' => 'the key of the variable in the template Data array',
 				'type' => 'string',
 				'default' => '*',
 				'position' => 1,
