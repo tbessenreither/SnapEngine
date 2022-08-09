@@ -1,0 +1,22 @@
+<html>
+<header>
+	<title>A Snap Template Engine Demo Template</title>
+</header>
+
+<body>
+	<div id="content">
+		<h1>{{var::title}}</h1>
+		<p>no encoding title: {{var::title::none}}</p>
+		<p>default var: {{var::nonexistant?default=moep}}</p>
+		<p>{{var::items.0.name}}</p>
+		<p>{{testtag}}</p>
+
+		<ul>
+			{{foreach::items}}
+			<li>{{var::name}} - {{var::price}}€</li>
+			{{/foreach}}
+		</ul>
+	</div>
+</body>
+
+</html>
