@@ -12,7 +12,7 @@ It uses the Batleth Tag Syntax, a mixture between Laravel Blade and Contao Inser
 
 New Tags are easy to add by registering it to the engine.
 
-Each Tag is of the SnapTag class and is created with a tag name, a callback and a configuration of what parameters it receives via the Bathleth Tags.
+Each Tag is of the SnapTag class and is created with a tag name, a callback and a configuration of what parameters it receives via the Batleth Tags.
 
 All parameters will be found in the 'params' key of $args passed 
 
@@ -29,7 +29,7 @@ $engine->registerTag(new SnapTag('my_tag', function($args) {
 			'type' => 'string', //this field is required. The Engine will cast all data you get to the correct type. No further actions required
 			'required' => true, //is it required
 			'default' => 'default value', // what's the default value. if this is set required will be set to false!
-			'position' => 1, // the position of the parameter in the Bathleth Tag. Human readable Int starting with 1
+			'position' => 1, // the position of the parameter in the Batleth Tag. Human readable Int starting with 1
 		],
 	],
 ]));
