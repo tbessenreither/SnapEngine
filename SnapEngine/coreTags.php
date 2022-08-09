@@ -1,6 +1,25 @@
 <?php
 
 class SnapEngineCoreTags {
+	private static function preHelper($args) {
+
+		ob_start();
+		var_dump($args);
+		$pre = ob_get_contents();
+		ob_end_clean();
+
+		$replace = array(
+			"=>\n"				=> '=>',
+			"array(0) {\n"		=> 'array(0) {',
+			"  "				=> "   ",
+			"{      }"			=> '{}',
+			'{            }'	=> '{}',
+			'=>      '			=> "=>\t",
+		);
+		$pre = str_replace(array_keys($replace), array_values($replace), $pre);
+		$pre = '<pre class="debug">' . PHP_EOL . htmlentities($pre) . "</pre><br/>" . PHP_EOL;
+		return $pre;
+	}
 	public static function var($args) {
 		$variable = SnapEngineParser::lookupVariable($args['params']['key']);
 
@@ -36,6 +55,10 @@ class SnapEngineCoreTags {
 			return $data;
 		}
 	}
+
+	public static function pre($args) {
+		return SnapEngineCoreTags::preHelper(SnapEngineParser::lookupVariable($args['params']['key']));
+	}
 }
 
 return [
@@ -65,7 +88,19 @@ return [
 	]),
 
 	new SnapTag('foreach', ['SnapEngineCoreTags', 'foreach'], [
-		'description' => 'Ruft ein Template in einer Schleife mit den daten aus $key auf',
+		'description' => 'uses it\'s content to print it out for every item in the array $key',
+		'parameters' => [
+			'key' => [
+				'description' => 'the key of the variable in the template Data array',
+				'type' => 'string',
+				'default' => '*',
+				'position' => 1,
+			],
+		],
+	]),
+
+	new SnapTag('pre', ['SnapEngineCoreTags', 'pre'], [
+		'description' => 'creates debug output of the variable $key',
 		'parameters' => [
 			'key' => [
 				'description' => 'the key of the variable in the template Data array',

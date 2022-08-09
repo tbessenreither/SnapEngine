@@ -11,6 +11,8 @@
 		<p>{{var::items.0.name}}</p>
 		<p>{{testtag}}</p>
 
+		{{pre::items}}
+
 		<ul>
 			{{foreach::items}}
 			<li>{{var::name}} - {{var::price}}€ - title Variable from global scope: {{var::title@global}}</li>
