@@ -13,7 +13,6 @@ class SnapEngineTemplateFromVar {
 }
 
 class SnapEngineParser {
-	private static $log = [];
 
 	private static ?SnapEngineRegister $registeredTags = null;
 	private static ?SnapEngineRegister $registeredFilters = null;
@@ -31,13 +30,6 @@ class SnapEngineParser {
 	}
 	public static function setFilterRegister(SnapEngineRegister $register) {
 		self::$registeredFilters = $register;
-	}
-
-	private static function log($message, $level = 1) {
-		self::$log[] = [
-			'message' => $message,
-			'level' => $level
-		];
 	}
 
 	private static function getLatestData() {
@@ -97,7 +89,8 @@ class SnapEngineParser {
 			if ($scope === 'local') {
 				$returnValue = self::walkArray($key, $data);
 			} else if ($scope === 'global') {
-				$returnValue = self::walkArray($key, self::getGlobalData());
+				$globalData = self::getGlobalData();
+				$returnValue = self::walkArray($key, $globalData);
 			} else if ($scope === 'system') {
 				$returnValue = self::walkArray($key, $GLOBALS);
 			} else if ($scope === 'last') {
@@ -157,7 +150,7 @@ class SnapEngineParser {
 		//prepare target
 		$target = null;
 
-		//walk the array or log error
+		//walk the array
 		if (isset($data[$searchKey]) || in_array($searchKey, array_keys($data))) {
 			$target = &$data[$searchKey];
 		} else {

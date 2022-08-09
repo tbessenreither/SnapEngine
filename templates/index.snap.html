@@ -13,7 +13,7 @@
 
 		<ul>
 			{{foreach::items}}
-			<li>{{var::name}} - {{var::price}}€</li>
+			<li>{{var::name}} - {{var::price}}€ - title Variable from global scope: {{var::title@global}}</li>
 			{{/foreach}}
 		</ul>
 	</div>
