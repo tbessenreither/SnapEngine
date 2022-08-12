@@ -1,12 +1,14 @@
 <?php
 
-class SnapEngineParserException extends Exception {
+namespace SnapEngine;
+
+class SnapEngineParserException extends \Exception {
 }
-class SnapEngineParserSkipExecution extends Exception {
+class SnapEngineParserSkipExecution extends \Exception {
 }
-class SnapEngineParserInvalidParameter extends Exception {
+class SnapEngineParserInvalidParameter extends \Exception {
 }
-class SnapEngineParserVariableNotFound extends Exception {
+class SnapEngineParserVariableNotFound extends \Exception {
 }
 
 class SnapEngineTemplateFromVar {

@@ -1,11 +1,18 @@
 <?php
+
+namespace SnapEngine;
+
+use SnapEngine\Tag\SnapTag;
+use SnapEngine\Filter\SnapFilter;
+
 require_once(__DIR__ . '/SnapTag.php');
 require_once(__DIR__ . '/SnapFilter.php');
 require_once(__DIR__ . '/SnapEngineRegister.php');
 require_once(__DIR__ . '/SnapEngineParser.php');
 
 
-class SnapEngineException extends Exception {
+
+class SnapEngineException extends \Exception {
 }
 
 class SnapEngine {

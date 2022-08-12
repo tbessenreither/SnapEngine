@@ -1,6 +1,11 @@
 <?php
 
-class SnapTagException extends Exception {
+namespace SnapEngine\Tag;
+
+use SnapEngine\SnapEngineParser;
+use SnapEngine\SnapEngineParserInvalidParameter;
+
+class SnapTagException extends \Exception {
 }
 
 class SnapTag {

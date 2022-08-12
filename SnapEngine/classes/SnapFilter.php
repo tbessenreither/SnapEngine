@@ -1,5 +1,7 @@
 <?php
 
+namespace SnapEngine\Filter;
+
 class SnapFilter {
 	private ?string $name = null;
 	private $properties = [];

@@ -1,6 +1,8 @@
 <?php
 
-class SnapEngineRegisterException extends Exception {
+namespace SnapEngine;
+
+class SnapEngineRegisterException extends \Exception {
 }
 
 class SnapEngineRegister {

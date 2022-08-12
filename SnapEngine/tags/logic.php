@@ -1,5 +1,9 @@
 <?php
 
+namespace SnapEngine\Tag;
+
+use SnapEngine\SnapEngineParser;
+
 class SnapEngineLogicTags {
 
 	public static function foreach($args) {
@@ -105,7 +109,7 @@ class SnapEngineLogicTags {
 
 return [
 
-	new SnapTag('foreach', ['SnapEngineLogicTags', 'foreach'], [
+	new SnapTag('foreach', ['SnapEngine\Tags\SnapEngineLogicTags', 'foreach'], [
 		'description' => 'uses it\'s content to print it out for every item in the array $key',
 		'parameters' => [
 			'key' => [
@@ -117,7 +121,7 @@ return [
 		],
 	]),
 
-	new SnapTag('if', ['SnapEngineLogicTags', 'if'], [
+	new SnapTag('if', ['SnapEngine\Tags\SnapEngineLogicTags', 'if'], [
 		'description' => 'outputs the wrapped content if condition is matched. Can contain an {{else}} tag to be output if the condition is not matched',
 		'parameters' => [
 			'condition' => [
