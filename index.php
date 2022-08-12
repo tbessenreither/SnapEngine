@@ -1,21 +1,8 @@
 <?php
-require_once(__DIR__ . '/SnapEngine/index.php');
+require_once(__DIR__ . '/SnapEngine/init.php');
 
 
-function pre($data) {
-	echo '<pre>';
-	var_dump($data);
-	echo '</pre>';
-}
-
-
-$engine = new SnapEngine();
-
-
-
-$templateFile = __DIR__ . '/templates/index.snap.html';
-
-echo $engine->render($templateFile, [
+echo $engine->render('index.snap.html', [
 	'title' => 'The <b>Title</b>',
 	'array' => [
 		'a',

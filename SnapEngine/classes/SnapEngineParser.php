@@ -14,6 +14,7 @@ class SnapEngineTemplateFromVar {
 
 class SnapEngineParser {
 
+	public static ?SnapEngine $engine = null;
 	private static ?SnapEngineRegister $registeredTags = null;
 	private static ?SnapEngineRegister $registeredFilters = null;
 
@@ -25,11 +26,31 @@ class SnapEngineParser {
 
 	private static $dataStack = [];
 
+	public static function setEngine(SnapEngine $engine) {
+		self::$engine = $engine;
+	}
 	public static function setTagRegister(SnapEngineRegister $register) {
 		self::$registeredTags = $register;
 	}
 	public static function setFilterRegister(SnapEngineRegister $register) {
 		self::$registeredFilters = $register;
+	}
+
+	public static function pre($content) {
+		if (isset($content['data'])) {
+			$content['data'] = '--removed--';
+		}
+		echo '<pre>';
+		var_dump($content);
+		echo '</pre>';
+	}
+
+	private static function cleanMatchFromNumerics(&$match) {
+		foreach ($match as $key => $value) {
+			if (is_numeric($key)) {
+				unset($match[$key]);
+			}
+		}
 	}
 
 	private static function getLatestData() {
@@ -45,6 +66,26 @@ class SnapEngineParser {
 			return [];
 		} else {
 			return self::$dataStack[0];
+		}
+	}
+
+	/**
+	 * Lookup wrapper for use in tags to lookup special vars like true, false or null by prefixing the var with $
+	 *
+	 * @param string $operator
+	 * @param mixed $data
+	 * @return mixed The value of the var
+	 */
+	public static function lookupSpecialOperator(string $variableName, &$data = null) {
+		if ($variableName === '$null') {
+			return null;
+		} else if ($variableName === '$true') {
+			return true;
+		} else if ($variableName === '$false') {
+			return false;
+		} else {
+			$opSource = substr($variableName, 1);
+			return self::lookupVariable(trim($opSource), $data);
 		}
 	}
 
@@ -233,12 +274,14 @@ class SnapEngineParser {
 		return $content;
 	}
 
-	private static function replaceTags(&$content, &$data) {
+	public static function replaceTags(&$content, &$data) {
 		array_push(self::$dataStack, $data);
 		$tagRegex = '#{{(?P<batlethTag>[\w_]{2,})(?P<paramsIndex>(?:\:\:[^|\#]+)+)?(?:\?(?P<paramsQuery>.+))?(?<paramsFilter>\|(?:[\w\|]+))?(?:\#(?P<tagNum>[\d]+))?}}(?:(?<content>.+)\{\{/(?P=batlethTag)\#(?P=tagNum)\}\})??#Uis';
 
-
 		$content = preg_replace_callback($tagRegex, function ($match) {
+			self::cleanMatchFromNumerics($match);
+
+			$match['data'] = self::getLatestData();
 			if (!isset($match['paramsFilter'])) {
 				$match['paramsFilter'] = [];
 			}
@@ -293,7 +336,27 @@ class SnapEngineParser {
 		array_pop(self::$dataStack);
 	}
 
-	public static function parse($content, $data) {
+	private static function rescanTags() {
+		if (!self::$registeredTags->rescan()) {
+			return false;
+		}
+
+		self::$templateInnerTagMap = [];
+		$tags = self::$registeredTags->getAll();
+		foreach ($tags as $tag) {
+			$isContentTagValue = $tag->property('isContentTag');
+			if ($isContentTagValue) {
+				self::$templateInnerTagMap[$isContentTagValue] = $tag->name();
+			}
+		}
+
+		return true;
+	}
+
+	public static function parse($content, $data = null) {
+		self::rescanTags();
+
+
 		//$tagPrefix = self::envVarGet('templateTagPrefix', true);
 		//replace shorthand alias
 		$content = strtr($content, []);

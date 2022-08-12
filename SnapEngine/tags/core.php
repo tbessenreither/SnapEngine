@@ -47,17 +47,17 @@ class SnapEngineCoreTags {
 		return $variable;
 	}
 
-	public static function foreach($args) {
-		$data = SnapEngineParser::lookupVariable($args['params']['key']);
-		if (is_array($data)) {
-			return SnapEngineParser::parseLoop($args['content'], $data);
-		} else {
-			return $data;
-		}
-	}
-
 	public static function pre($args) {
 		return SnapEngineCoreTags::preHelper(SnapEngineParser::lookupVariable($args['params']['key']));
+	}
+
+	public static function template($args) {
+		try {
+			$data = SnapEngineParser::lookupVariable($args['params']['key']);
+			return SnapEngineParser::$engine->render($args['params']['template'], $data);
+		} catch (SnapEngineException $ex) {
+			return $ex->getMessage();
+		}
 	}
 }
 
@@ -87,18 +87,6 @@ return [
 		],
 	]),
 
-	new SnapTag('foreach', ['SnapEngineCoreTags', 'foreach'], [
-		'description' => 'uses it\'s content to print it out for every item in the array $key',
-		'parameters' => [
-			'key' => [
-				'description' => 'the key of the variable in the template Data array',
-				'type' => 'string',
-				'default' => '*',
-				'position' => 1,
-			],
-		],
-	]),
-
 	new SnapTag('pre', ['SnapEngineCoreTags', 'pre'], [
 		'description' => 'creates debug output of the variable $key',
 		'parameters' => [
@@ -111,9 +99,21 @@ return [
 		],
 	]),
 
-	new SnapTag('testtag', function ($args) {
-		return 'testtagFunction';
-	}, [
-		'description' => 'Nur ein Testtag',
+	new SnapTag('template', ['SnapEngineCoreTags', 'template'], [
+		'description' => 'Ruft ein Template mit den daten aus $dataKey auf',
+		'parameters' => [
+			'template' => [
+				'description' => 'the template to call',
+				'required' => true,
+				'type' => 'string',
+				'position' => 1,
+			],
+			'key' => [
+				'description' => 'the key of the data passed through to the template',
+				'default' => '*',
+				'type' => 'mixed',
+				'position' => 2,
+			],
+		],
 	]),
 ];

@@ -8,10 +8,14 @@
 		<h1>{{var::title}}</h1>
 		<p>no encoding title: {{var::title::none}}</p>
 		<p>default var: {{var::nonexistant?default=moep}}</p>
-		<p>{{var::items.0.name}}</p>
-		<p>{{testtag}}</p>
 
 		{{pre::items}}
+
+		{{if::$items.2.price > 10 }}
+		{{var::items.2.name}} costs more than 10
+		{{else}}
+		{{var::items.2.name}} costs less than 10
+		{{/if}}
 
 		<ul>
 			{{foreach::items}}
