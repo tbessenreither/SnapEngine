@@ -109,7 +109,7 @@ class SnapEngineLogicTags {
 
 return [
 
-	new SnapTag('foreach', ['SnapEngine\Tags\SnapEngineLogicTags', 'foreach'], [
+	new SnapTag('foreach', ['SnapEngine\Tag\SnapEngineLogicTags', 'foreach'], [
 		'description' => 'uses it\'s content to print it out for every item in the array $key',
 		'parameters' => [
 			'key' => [
@@ -121,7 +121,7 @@ return [
 		],
 	]),
 
-	new SnapTag('if', ['SnapEngine\Tags\SnapEngineLogicTags', 'if'], [
+	new SnapTag('if', ['SnapEngine\Tag\SnapEngineLogicTags', 'if'], [
 		'description' => 'outputs the wrapped content if condition is matched. Can contain an {{else}} tag to be output if the condition is not matched',
 		'parameters' => [
 			'condition' => [

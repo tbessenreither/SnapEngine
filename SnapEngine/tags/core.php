@@ -68,7 +68,7 @@ class SnapEngineCoreTags {
 }
 
 return [
-	new SnapTag('var', ['SnapEngine\Tags\SnapEngineCoreTags', 'var'], [
+	new SnapTag('var', ['SnapEngine\Tag\SnapEngineCoreTags', 'var'], [
 		'description' => 'Gibt eine Variable aus. Füge Scope über @ nach dem Variablennamen hinzu',
 		'parameters' => [
 			'key' => [
@@ -93,7 +93,7 @@ return [
 		],
 	]),
 
-	new SnapTag('pre', ['SnapEngine\Tags\SnapEngineCoreTags', 'pre'], [
+	new SnapTag('pre', ['SnapEngine\Tag\SnapEngineCoreTags', 'pre'], [
 		'description' => 'creates debug output of the variable $key',
 		'parameters' => [
 			'key' => [
@@ -105,7 +105,7 @@ return [
 		],
 	]),
 
-	new SnapTag('template', ['SnapEngine\Tags\SnapEngineCoreTags', 'template'], [
+	new SnapTag('template', ['SnapEngine\Tag\SnapEngineCoreTags', 'template'], [
 		'description' => 'Ruft ein Template mit den daten aus $dataKey auf',
 		'parameters' => [
 			'template' => [
